@@ -91,7 +91,7 @@ export function CurrencyConverter({ initialCurrencies }: CurrencyConverterProps)
   }));
 
   const toCurrencyOptions = [
-    { value: "", label: "Selecciona una moneda" },
+    { value: "", label: "Select a currency" },
     ...availableToCurrencies.map((currency) => ({
       value: currency.code,
       label: `${currency.code} - ${currency.name}`,
@@ -121,7 +121,7 @@ export function CurrencyConverter({ initialCurrencies }: CurrencyConverterProps)
       <div className={styles.form}>
         <div className={styles.amountInput}>
           <Input
-            label="Monto"
+            label="Amount"
             type="number"
             value={amount}
             onChange={(e) => {
@@ -130,13 +130,13 @@ export function CurrencyConverter({ initialCurrencies }: CurrencyConverterProps)
             }}
             min="0"
             step="0.01"
-            placeholder="Ingresa el monto"
+            placeholder="Enter amount"
           />
         </div>
 
         <Select
-          label="Moneda origen"
-          options={[{ value: "", label: "Selecciona una moneda" }, ...currencyOptions]}
+          label="From currency"
+          options={[{ value: "", label: "Select a currency" }, ...currencyOptions]}
           value={from}
           onChange={(e) => handleFromChange(e.target.value)}
           className={styles.select}
@@ -145,7 +145,7 @@ export function CurrencyConverter({ initialCurrencies }: CurrencyConverterProps)
         <div className={styles.toSection}>
           <div className={styles.toHeader}>
             <Select
-              label="Agregar moneda destino"
+              label="Add destination currency"
               options={toCurrencyOptions}
               value={selectedToAdd}
               onChange={(e) => setSelectedToAdd(e.target.value)}
@@ -158,7 +158,7 @@ export function CurrencyConverter({ initialCurrencies }: CurrencyConverterProps)
               disabled={!selectedToAdd || !from || selectedToAdd === from}
               className={styles.addButton}
             >
-              Agregar
+              Add
             </Button>
           </div>
 
@@ -170,7 +170,7 @@ export function CurrencyConverter({ initialCurrencies }: CurrencyConverterProps)
                   <button
                     onClick={() => handleRemoveCurrency(code)}
                     className={styles.removeButton}
-                    aria-label={`Remover ${code}`}
+                    aria-label={`Remove ${code}`}
                   >
                     ×
                   </button>
@@ -185,24 +185,24 @@ export function CurrencyConverter({ initialCurrencies }: CurrencyConverterProps)
         <div className={styles.errorContainer}>
           <p className={styles.errorMessage}>{error}</p>
           <Button onClick={handleRetry} variant="primary" size="sm">
-            Reintentar
+            Retry
           </Button>
         </div>
       ) : loading ? (
-        <div className={styles.loading}>Cargando tasas...</div>
+        <div className={styles.loading}>Loading rates...</div>
       ) : !from ? (
         <div className={styles.hint}>
-          Selecciona una moneda origen para comenzar
+          Select a from currency to get started
         </div>
       ) : to.length === 0 ? (
         <div className={styles.hint}>
-          Selecciona al menos una moneda destino para ver las conversiones
+          Select at least one destination currency to see conversions
         </div>
       ) : ratesData ? (
         <div className={styles.results}>
           <div className={styles.meta}>
             <span className={styles.metaText}>
-              Base: <strong>{ratesData.base}</strong> • Fecha: <strong>{ratesData.date}</strong>
+              Base: <strong>{ratesData.base}</strong> • Date: <strong>{ratesData.date}</strong>
             </span>
           </div>
 
@@ -222,7 +222,7 @@ export function CurrencyConverter({ initialCurrencies }: CurrencyConverterProps)
                     {formatMoney(converted, code)}
                   </div>
                   <div className={styles.resultRate}>
-                    Tasa: {rate.toFixed(5)}
+                    Rate: {rate.toFixed(5)}
                   </div>
                 </div>
               );

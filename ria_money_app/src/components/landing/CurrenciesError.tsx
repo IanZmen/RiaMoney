@@ -10,14 +10,14 @@ interface CurrenciesErrorProps {
 
 export function CurrenciesError({ error, onRetry }: CurrenciesErrorProps) {
   return (
-    <section className={styles.section} aria-label="Error al cargar monedas">
-      <h2 className={styles.title}>Trabajamos con las siguientes monedas</h2>
+    <section className={styles.section} aria-label="Error loading currencies">
+      <h2 className={styles.title}>We work with the following currencies</h2>
       <div className={styles.errorContainer}>
         <p className={styles.errorMessage}>
-          {error || "No se pudieron cargar las monedas disponibles"}
+          {error || "Could not load available currencies"}
         </p>
         <Button onClick={onRetry} variant="primary">
-          Reintentar
+          Retry
         </Button>
       </div>
     </section>

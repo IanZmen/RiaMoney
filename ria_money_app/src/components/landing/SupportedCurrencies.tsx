@@ -11,8 +11,8 @@ export function SupportedCurrencies({ currencies }: SupportedCurrenciesProps) {
   const duplicatedCurrencies = [...currencies, ...currencies];
 
   return (
-    <section className={styles.section} aria-label="Monedas soportadas">
-      <h2 className={styles.title}>Trabajamos con las siguientes monedas</h2>
+    <section className={styles.section} aria-label="Supported currencies">
+      <h2 className={styles.title}>We work with the following currencies</h2>
       <div className={styles.wrapper}>
         <div className={styles.scrollContainer}>
           <ul className={styles.currencyList}>

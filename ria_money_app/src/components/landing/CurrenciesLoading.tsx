@@ -2,8 +2,8 @@ import styles from "./CurrenciesLoading.module.css";
 
 export function CurrenciesLoading() {
   return (
-    <section className={styles.section} aria-label="Cargando monedas">
-      <h2 className={styles.title}>Trabajamos con las siguientes monedas</h2>
+    <section className={styles.section} aria-label="Loading currencies">
+      <h2 className={styles.title}>We work with the following currencies</h2>
       <div className={styles.wrapper}>
         <div className={styles.skeletonGrid}>
           {Array.from({ length: 8 }).map((_, index) => (

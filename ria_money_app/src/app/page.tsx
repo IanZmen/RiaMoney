@@ -18,7 +18,7 @@ async function fetchCurrencies() {
   } catch (error) {
     return {
       currencies: null,
-      error: error instanceof Error ? error.message : "Error desconocido",
+      error: error instanceof Error ? error.message : "Unknown error",
     };
   }
 }
@@ -35,36 +35,36 @@ export default async function Home() {
               <h1 className={styles.title}>{APP_NAME}</h1>
               <p className={styles.subtitle}>{APP_DESCRIPTION}</p>
               <p className={styles.description}>
-                Realiza conversiones de moneda y consulta tasas de cambio en tiempo real.
+                Perform currency conversions and check exchange rates in real time.
               </p>
               <Button href="/dashboard" variant="primary" size="lg">
-                Ir al Dashboard
+                Go to Dashboard
               </Button>
             </div>
             <div className={styles.features}>
               <div>
-                <h3 className={styles.featureTitle}>Conversión en Tiempo Real</h3>
+                <h3 className={styles.featureTitle}>Real-Time Conversion</h3>
                 <p className={styles.featureText}>
-                  Obtén tasas de cambio actualizadas.
+                  Get up-to-date exchange rates.
                 </p>
               </div>
               <div>
-                <h3 className={styles.featureTitle}>Fácil de Usar</h3>
+                <h3 className={styles.featureTitle}>Easy to Use</h3>
                 <p className={styles.featureText}>
-                  Interfaz intuitiva que te permite convertir entre monedas con solo unos clics.
+                  Intuitive interface that allows you to convert between currencies with just a few clicks.
                 </p>
               </div>
               <div>
-                <h3 className={styles.featureTitle}>Datos Confiables</h3>
+                <h3 className={styles.featureTitle}>Reliable Data</h3>
                 <p className={styles.featureText}>
-                  Información precisa obtenida de la{" "}
+                  Accurate information obtained from the{" "}
                   <a
                     href="https://frankfurter.dev/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.link}
                   >
-                    API de Frankfurter
+                    Frankfurter API
                   </a>
                   .
                 </p>

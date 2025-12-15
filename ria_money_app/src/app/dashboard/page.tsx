@@ -29,7 +29,7 @@ async function fetchDashboardData() {
     return {
       rates: null,
       currencies: [],
-      ratesError: error instanceof Error ? error.message : "Error desconocido",
+      ratesError: error instanceof Error ? error.message : "Unknown error",
       currenciesError: null,
     };
   }
@@ -45,7 +45,7 @@ export default async function DashboardPage() {
           <div className={styles.header}>
             <h1 className={styles.title}>Dashboard</h1>
             <p className={styles.subtitle}>
-              Panel principal de conversión de moneda y tasas de cambio
+              Main currency conversion and exchange rates panel
             </p>
           </div>
 
@@ -56,11 +56,11 @@ export default async function DashboardPage() {
               ) : currenciesError ? (
                 <div className={styles.errorContainer}>
                   <p className={styles.errorMessage}>
-                    {currenciesError || "No se pudieron cargar las monedas"}
+                    {currenciesError || "Could not load currencies"}
                   </p>
                 </div>
               ) : (
-                <div className={styles.loading}>Cargando monedas...</div>
+                <div className={styles.loading}>Loading currencies...</div>
               )}
             </Card>
 
@@ -70,11 +70,11 @@ export default async function DashboardPage() {
               ) : ratesError ? (
                 <div className={styles.errorContainer}>
                   <p className={styles.errorMessage}>
-                    {ratesError || "No se pudieron cargar las tasas de cambio"}
+                    {ratesError || "Could not load exchange rates"}
                   </p>
                 </div>
               ) : (
-                <div className={styles.loading}>Cargando tasas de cambio...</div>
+                <div className={styles.loading}>Loading exchange rates...</div>
               )}
             </Card>
           </div>

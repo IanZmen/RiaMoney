@@ -86,7 +86,7 @@ export function ExchangeRatesOverview({
       <div className={styles.errorContainer}>
         <p className={styles.errorMessage}>{error}</p>
         <Button onClick={handleRetry} variant="primary" size="sm">
-          Reintentar
+          Retry
         </Button>
       </div>
     );
@@ -96,7 +96,7 @@ export function ExchangeRatesOverview({
     <div className={styles.container}>
       <div className={styles.header}>
         <Select
-          label="Moneda base"
+          label="Base currency"
           options={currencyOptions}
           value={baseCurrency}
           onChange={(e) => setBaseCurrency(e.target.value)}
@@ -104,13 +104,13 @@ export function ExchangeRatesOverview({
         />
         <div className={styles.meta}>
           <span className={styles.metaText}>
-            Base: <strong>{baseCurrency}</strong> • Fecha: <strong>{rates.date}</strong>
+            Base: <strong>{baseCurrency}</strong> • Date: <strong>{rates.date}</strong>
           </span>
         </div>
       </div>
 
       {loading ? (
-        <div className={styles.loading}>Cargando tasas...</div>
+        <div className={styles.loading}>Loading rates...</div>
       ) : (
         <div className={styles.scrollWrapper}>
           <div className={styles.scrollContainer}>
