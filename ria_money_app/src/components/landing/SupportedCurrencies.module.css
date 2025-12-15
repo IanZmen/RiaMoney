@@ -1,0 +1,108 @@
+.section {
+  padding: 3rem 0;
+  background: linear-gradient(to bottom right, rgb(239 246 255), rgb(255 255 255));
+}
+
+.title {
+  text-align: center;
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: rgb(17 24 39);
+  margin-bottom: 2rem;
+}
+
+.wrapper {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.scrollContainer {
+  display: flex;
+  width: fit-content;
+  animation: scroll 100s linear infinite;
+}
+
+.currencyList {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 1rem;
+}
+
+.currencyItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  height: 100px;
+  background-color: rgb(255 255 255);
+  border: 1px solid rgb(209 213 219);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.currencyItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.code {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgb(37 99 235);
+  margin-bottom: 0.25rem;
+}
+
+.name {
+  font-size: 0.875rem;
+  color: rgb(75 85 99);
+  text-align: center;
+  line-height: 1.2;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.wrapper:hover .scrollContainer {
+  animation-play-state: paused;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 2rem 0;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .currencyItem {
+    min-width: 150px;
+    height: 90px;
+    padding: 0.75rem;
+  }
+
+  .code {
+    font-size: 1.125rem;
+  }
+
+  .name {
+    font-size: 0.75rem;
+  }
+}
+

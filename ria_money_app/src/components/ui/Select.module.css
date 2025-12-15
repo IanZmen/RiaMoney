@@ -1,0 +1,58 @@
+.wrapper {
+  width: 100%;
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(55 65 81);
+  margin-bottom: 0.25rem;
+}
+
+.select {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 2px solid rgb(37 99 235);
+  border-radius: 0.5rem;
+  outline: none;
+  transition-property: border-color, background-color, font-weight;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  background-color: rgb(239 246 255);
+  color: rgb(29 78 216);
+  font-weight: 600;
+}
+
+.select:focus {
+  border-color: rgb(29 78 216);
+  box-shadow: 0 0 0 2px rgb(255 255 255), 0 0 0 4px rgb(59 130 246);
+  background-color: rgb(219 234 254);
+}
+
+.select.error {
+  border-color: rgb(239 68 68);
+}
+
+.select option {
+  background-color: rgb(255 255 255);
+  color: rgb(17 24 39);
+  padding: 0.5rem;
+}
+
+.select option:checked {
+  background-color: rgb(37 99 235);
+  color: rgb(255 255 255);
+  font-weight: 600;
+}
+
+.select option:hover {
+  background-color: rgb(239 246 255);
+}
+
+.errorMessage {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: rgb(220 38 38);
+}
+

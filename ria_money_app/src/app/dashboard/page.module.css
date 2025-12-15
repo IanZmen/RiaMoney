@@ -1,0 +1,76 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(249 250 251);
+}
+
+.main {
+  flex: 1;
+  padding: 2rem 0;
+}
+
+.header {
+  margin-bottom: 2rem;
+  min-height: fit-content;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: rgb(17 24 39);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+@media (max-width: 640px) {
+  .title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.25rem;
+  }
+}
+
+.subtitle {
+  color: rgb(75 85 99);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cardText {
+  color: rgb(75 85 99);
+}
+
+.errorContainer {
+  text-align: center;
+  padding: 1rem;
+}
+
+.errorMessage {
+  color: rgb(220 38 38);
+  font-size: 0.875rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: rgb(107 114 128);
+}
+

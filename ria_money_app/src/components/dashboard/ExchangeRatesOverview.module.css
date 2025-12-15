@@ -1,0 +1,134 @@
+.container {
+  width: 100%;
+}
+
+.header {
+  margin-bottom: 1.5rem;
+}
+
+.select {
+  margin-bottom: 1rem;
+}
+
+.meta {
+  margin-top: 0.75rem;
+}
+
+.metaText {
+  font-size: 0.875rem;
+  color: rgb(75 85 99);
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: rgb(107 114 128);
+}
+
+.errorContainer {
+  text-align: center;
+  padding: 2rem;
+}
+
+.errorMessage {
+  color: rgb(220 38 38);
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.scrollWrapper {
+  overflow: hidden;
+  position: relative;
+  height: 400px;
+  border: 1px solid rgb(209 213 219);
+  border-radius: 0.5rem;
+  background-color: rgb(255 255 255);
+}
+
+.scrollContainer {
+  display: flex;
+  flex-direction: column;
+  animation: scrollVertical 30s linear infinite;
+}
+
+.scrollWrapper:hover .scrollContainer {
+  animation-play-state: paused;
+}
+
+.ratesList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rateItem {
+  padding: 1rem;
+  border-bottom: 1px solid rgb(243 244 246);
+  transition: background-color 0.2s ease;
+}
+
+.rateItem:hover {
+  background-color: rgb(249 250 251);
+}
+
+.rateRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rateInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.code {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: rgb(37 99 235);
+}
+
+.name {
+  font-size: 0.75rem;
+  color: rgb(75 85 99);
+}
+
+.rate {
+  font-family: monospace;
+  font-size: 0.875rem;
+  color: rgb(17 24 39);
+  font-weight: 500;
+}
+
+@keyframes scrollVertical {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .scrollWrapper {
+    height: 300px;
+  }
+
+  .rateItem {
+    padding: 0.75rem;
+  }
+
+  .code {
+    font-size: 0.8125rem;
+  }
+
+  .name {
+    font-size: 0.6875rem;
+  }
+
+  .rate {
+    font-size: 0.8125rem;
+  }
+}
+
