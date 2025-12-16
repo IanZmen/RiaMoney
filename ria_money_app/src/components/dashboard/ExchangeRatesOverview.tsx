@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { Select } from "@/components/ui/Select";
-import { Button } from "@/components/ui/Button";
+import { ErrorState } from "@/components/common/ErrorState";
 import { getLatestRates } from "@/api/exchangeRates";
+import { getUserErrorMessage } from "@/lib/errors/messages";
 import type { Currency, LatestRatesResponse } from "@/types";
 import { MAJOR_CURRENCIES } from "@/constants/majorCurrencies";
 import styles from "./ExchangeRatesOverview.module.css";
@@ -34,7 +35,7 @@ export function ExchangeRatesOverview({
 
       const response = await getLatestRates({ from: baseCurrency });
       if (response.error) {
-        setError(response.error);
+        setError(getUserErrorMessage(response.error));
       } else {
         setRates(response.data);
       }
@@ -50,7 +51,7 @@ export function ExchangeRatesOverview({
 
     const response = await getLatestRates({ from: baseCurrency });
     if (response.error) {
-      setError(response.error);
+      setError(getUserErrorMessage(response.error));
     } else {
       setRates(response.data);
     }
@@ -77,19 +78,12 @@ export function ExchangeRatesOverview({
   };
 
   const getCurrencyName = (code: string): string => {
-    const currency = currencies.find((c) => c.code === code);
+    const currency = currencies.find((currencyItem) => currencyItem.code === code);
     return currency?.name || code;
   };
 
   if (error) {
-    return (
-      <div className={styles.errorContainer}>
-        <p className={styles.errorMessage}>{error}</p>
-        <Button onClick={handleRetry} variant="primary" size="sm">
-          Retry
-        </Button>
-      </div>
-    );
+    return <ErrorState message={error} onRetry={handleRetry} compact />;
   }
 
   return (
@@ -99,7 +93,7 @@ export function ExchangeRatesOverview({
           label="Base currency"
           options={currencyOptions}
           value={baseCurrency}
-          onChange={(e) => setBaseCurrency(e.target.value)}
+          onChange={(event) => setBaseCurrency(event.target.value)}
           className={styles.select}
         />
         <div className={styles.meta}>

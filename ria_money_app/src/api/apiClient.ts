@@ -1,4 +1,6 @@
-import type { ApiResponse, ApiClientConfig, RequestOptions } from "@/types";
+import type { ApiResponse, ApiClientConfig, RequestOptions, ApiError } from "@/types";
+import { toApiError } from "@/lib/errors/normalize";
+import { logError } from "@/lib/errors/messages";
 
 export class ApiClient {
   private baseURL: string;
@@ -14,10 +16,10 @@ export class ApiClient {
     this.timeout = config.timeout || 30000;
   }
 
-  private async request<T>(
+  private async request<ResponseData>(
     endpoint: string,
     options: RequestOptions = {}
-  ): Promise<ApiResponse<T>> {
+  ): Promise<ApiResponse<ResponseData>> {
     const url = `${this.baseURL}${endpoint}`;
     const method = options.method || "GET";
 
@@ -42,51 +44,61 @@ export class ApiClient {
     try {
       const response = await fetch(url, config);
       clearTimeout(timeoutId);
-      const data = await response.json();
 
       if (!response.ok) {
+        const apiError = toApiError(
+          new Error(`HTTP ${response.status}: ${response.statusText}`),
+          response.status
+        );
+        logError(apiError, `API ${method} ${endpoint}`);
         return {
-          data: data as T,
-          error: data.message || `HTTP Error: ${response.status}`,
+          data: {} as ResponseData,
+          error: apiError,
           status: response.status,
         };
       }
 
-      return {
-        data: data as T,
-        status: response.status,
-      };
+      try {
+        const data = await response.json();
+        return {
+          data: data as ResponseData,
+          status: response.status,
+        };
+      } catch (parseError) {
+        const apiError = toApiError(parseError, response.status);
+        logError(apiError, `API ${method} ${endpoint}`);
+        return {
+          data: {} as ResponseData,
+          error: apiError,
+          status: response.status,
+        };
+      }
     } catch (error) {
       clearTimeout(timeoutId);
-      const errorMessage =
-        error instanceof Error
-          ? error.name === "AbortError"
-            ? "Request timeout"
-            : error.message
-          : "Unknown error occurred";
-
+      const apiError = toApiError(error);
+      logError(apiError, `API ${method} ${endpoint}`);
       return {
-        data: {} as T,
-        error: errorMessage,
+        data: {} as ResponseData,
+        error: apiError,
         status: 0,
       };
     }
   }
 
-  async get<T>(endpoint: string, options?: Omit<RequestOptions, "method" | "body">): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { ...options, method: "GET" });
+  async get<ResponseData>(endpoint: string, options?: Omit<RequestOptions, "method" | "body">): Promise<ApiResponse<ResponseData>> {
+    return this.request<ResponseData>(endpoint, { ...options, method: "GET" });
   }
 
-  async post<T>(endpoint: string, body?: unknown, options?: Omit<RequestOptions, "method">): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { ...options, method: "POST", body });
+  async post<ResponseData>(endpoint: string, body?: unknown, options?: Omit<RequestOptions, "method">): Promise<ApiResponse<ResponseData>> {
+    return this.request<ResponseData>(endpoint, { ...options, method: "POST", body });
   }
 
-  async put<T>(endpoint: string, body?: unknown, options?: Omit<RequestOptions, "method">): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { ...options, method: "PUT", body });
+  async put<ResponseData>(endpoint: string, body?: unknown, options?: Omit<RequestOptions, "method">): Promise<ApiResponse<ResponseData>> {
+    return this.request<ResponseData>(endpoint, { ...options, method: "PUT", body });
   }
 
-  async delete<T>(endpoint: string, options?: Omit<RequestOptions, "method" | "body">): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { ...options, method: "DELETE" });
+  async delete<ResponseData>(endpoint: string, options?: Omit<RequestOptions, "method" | "body">): Promise<ApiResponse<ResponseData>> {
+    return this.request<ResponseData>(endpoint, { ...options, method: "DELETE" });
   }
 }
 

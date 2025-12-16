@@ -1,5 +1,10 @@
 import { frankfurterClient } from "./apiClient";
-import type { ApiResponse, LatestRatesResponse } from "@/types";
+import type {
+  ApiResponse,
+  LatestRatesResponse,
+  TimeSeriesResponse,
+  SingleDateResponse,
+} from "@/types";
 
 export interface GetLatestRatesParams {
   from?: string;
@@ -25,5 +30,42 @@ export async function getLatestRates(
   }
 
   return frankfurterClient.get<LatestRatesResponse>(endpoint);
+}
+
+export interface GetTimeSeriesParams {
+  start: string;
+  end: string;
+  from?: string;
+}
+
+export async function getTimeSeries(
+  params: GetTimeSeriesParams
+): Promise<ApiResponse<TimeSeriesResponse>> {
+  const { start, end, from } = params;
+  let endpoint = `/v1/${start}..${end}`;
+  
+  if (from) {
+    endpoint += `?from=${from}`;
+  }
+  
+  return frankfurterClient.get<TimeSeriesResponse>(endpoint);
+}
+
+export interface GetRatesByDateParams {
+  date: string;
+  from?: string;
+}
+
+export async function getRatesByDate(
+  params: GetRatesByDateParams
+): Promise<ApiResponse<SingleDateResponse>> {
+  const { date, from } = params;
+  let endpoint = `/v1/${date}`;
+  
+  if (from) {
+    endpoint += `?from=${from}`;
+  }
+  
+  return frankfurterClient.get<SingleDateResponse>(endpoint);
 }
 

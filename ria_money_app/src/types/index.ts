@@ -1,6 +1,15 @@
-export interface ApiResponse<T> {
-  data: T;
-  error?: string;
+export type ApiErrorCode = "NETWORK" | "TIMEOUT" | "HTTP" | "PARSE" | "UNKNOWN";
+
+export interface ApiError {
+  code: ApiErrorCode;
+  status?: number;
+  message: string;
+  details?: string;
+}
+
+export interface ApiResponse<ResponseData> {
+  data: ResponseData;
+  error?: ApiError;
   status: number;
 }
 
@@ -25,6 +34,21 @@ export interface ExchangeRate {
 }
 
 export interface LatestRatesResponse {
+  amount: number;
+  base: string;
+  date: string;
+  rates: Record<string, number>;
+}
+
+export interface TimeSeriesResponse {
+  amount: number;
+  base: string;
+  start_date: string;
+  end_date: string;
+  rates: Record<string, Record<string, number>>;
+}
+
+export interface SingleDateResponse {
   amount: number;
   base: string;
   date: string;

@@ -5,6 +5,8 @@ import { SupportedCurrencies } from "@/components/landing/SupportedCurrencies";
 import { CurrenciesLoading } from "@/components/landing/CurrenciesLoading";
 import { CurrenciesError } from "@/components/landing/CurrenciesError";
 import { getCurrencies } from "@/api/currencies";
+import { toApiError } from "@/lib/errors/normalize";
+import { getUserErrorMessage } from "@/lib/errors/messages";
 import { currenciesMapToArray } from "@/types";
 import styles from "./page.module.css";
 
@@ -18,7 +20,7 @@ async function fetchCurrencies() {
   } catch (error) {
     return {
       currencies: null,
-      error: error instanceof Error ? error.message : "Unknown error",
+      error: error instanceof Error ? toApiError(error) : toApiError(new Error("Unknown error")),
     };
   }
 }
@@ -37,9 +39,14 @@ export default async function Home() {
               <p className={styles.description}>
                 Perform currency conversions and check exchange rates in real time.
               </p>
-              <Button href="/dashboard" variant="primary" size="lg">
-                Go to Dashboard
-              </Button>
+              <div className={styles.buttons}>
+                <Button href="/dashboard" variant="primary" size="lg">
+                  Go to Dashboard
+                </Button>
+                <Button href="/trend" variant="outline" size="lg">
+                  View Trends
+                </Button>
+              </div>
             </div>
             <div className={styles.features}>
               <div>
@@ -52,6 +59,12 @@ export default async function Home() {
                 <h3 className={styles.featureTitle}>Easy to Use</h3>
                 <p className={styles.featureText}>
                   Intuitive interface that allows you to convert between currencies with just a few clicks.
+                </p>
+              </div>
+              <div>
+                <h3 className={styles.featureTitle}>Trend Analysis</h3>
+                <p className={styles.featureText}>
+                  Analyze historical exchange rate trends and compare rates across different dates.
                 </p>
               </div>
               <div>
@@ -77,7 +90,7 @@ export default async function Home() {
       {currencies ? (
         <SupportedCurrencies currencies={currencies} />
       ) : error ? (
-        <CurrenciesError error={error} onRetry={() => window.location.reload()} />
+        <CurrenciesError error={getUserErrorMessage(error)} onRetry={() => window.location.reload()} />
       ) : (
         <CurrenciesLoading />
       )}

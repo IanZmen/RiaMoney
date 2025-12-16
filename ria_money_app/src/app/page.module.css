@@ -78,6 +78,13 @@
   line-height: 1.6;
 }
 
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .link {
   color: rgb(37 99 235);
   text-decoration: none;

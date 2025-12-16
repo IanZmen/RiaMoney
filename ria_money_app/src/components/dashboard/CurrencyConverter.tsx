@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
+import { ErrorState } from "@/components/common/ErrorState";
 import { getLatestRates } from "@/api/exchangeRates";
+import { getUserErrorMessage } from "@/lib/errors/messages";
 import type { Currency, LatestRatesResponse } from "@/types";
 import styles from "./CurrencyConverter.module.css";
 
@@ -33,7 +35,7 @@ export function CurrencyConverter({ initialCurrencies }: CurrencyConverterProps)
 
       const response = await getLatestRates({ from, to });
       if (response.error) {
-        setError(response.error);
+        setError(getUserErrorMessage(response.error));
         setRatesData(null);
       } else {
         setRatesData(response.data);
@@ -55,12 +57,12 @@ export function CurrencyConverter({ initialCurrencies }: CurrencyConverterProps)
   };
 
   const handleRemoveCurrency = (code: string) => {
-    setTo(to.filter((c) => c !== code));
+    setTo(to.filter((currencyCode) => currencyCode !== code));
   };
 
   const handleFromChange = (newFrom: string) => {
     setFrom(newFrom);
-    setTo(to.filter((c) => c !== newFrom));
+    setTo(to.filter((currencyCode) => currencyCode !== newFrom));
   };
 
   const formatMoney = (value: number, currencyCode: string): string => {
@@ -77,12 +79,12 @@ export function CurrencyConverter({ initialCurrencies }: CurrencyConverterProps)
   };
 
   const getCurrencyName = (code: string): string => {
-    const currency = initialCurrencies.find((c) => c.code === code);
+    const currency = initialCurrencies.find((currencyItem) => currencyItem.code === code);
     return currency?.name || code;
   };
 
   const availableToCurrencies = initialCurrencies.filter(
-    (c) => c.code !== from && !to.includes(c.code)
+    (currency) => currency.code !== from && !to.includes(currency.code)
   );
 
   const currencyOptions = initialCurrencies.map((currency) => ({
@@ -108,7 +110,7 @@ export function CurrencyConverter({ initialCurrencies }: CurrencyConverterProps)
 
     const response = await getLatestRates({ from, to });
     if (response.error) {
-      setError(response.error);
+      setError(getUserErrorMessage(response.error));
       setRatesData(null);
     } else {
       setRatesData(response.data);
@@ -126,7 +128,19 @@ export function CurrencyConverter({ initialCurrencies }: CurrencyConverterProps)
             value={amount}
             onChange={(e) => {
               const value = e.target.value;
-              setAmount(value === "" ? "" : parseFloat(value) || 0);
+              if (value === "") {
+                setAmount("");
+                return;
+              }
+              const numValue = parseFloat(value);
+              if (!isNaN(numValue) && numValue >= 0) {
+                setAmount(numValue);
+              }
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "-" || e.key === "e" || e.key === "E" || e.key === "+") {
+                e.preventDefault();
+              }
             }}
             min="0"
             step="0.01"
@@ -138,7 +152,7 @@ export function CurrencyConverter({ initialCurrencies }: CurrencyConverterProps)
           label="From currency"
           options={[{ value: "", label: "Select a currency" }, ...currencyOptions]}
           value={from}
-          onChange={(e) => handleFromChange(e.target.value)}
+          onChange={(event) => handleFromChange(event.target.value)}
           className={styles.select}
         />
 
@@ -148,7 +162,7 @@ export function CurrencyConverter({ initialCurrencies }: CurrencyConverterProps)
               label="Add destination currency"
               options={toCurrencyOptions}
               value={selectedToAdd}
-              onChange={(e) => setSelectedToAdd(e.target.value)}
+              onChange={(event) => setSelectedToAdd(event.target.value)}
               className={styles.toSelect}
             />
             <Button
@@ -182,12 +196,7 @@ export function CurrencyConverter({ initialCurrencies }: CurrencyConverterProps)
       </div>
 
       {error ? (
-        <div className={styles.errorContainer}>
-          <p className={styles.errorMessage}>{error}</p>
-          <Button onClick={handleRetry} variant="primary" size="sm">
-            Retry
-          </Button>
-        </div>
+        <ErrorState message={error} onRetry={handleRetry} compact />
       ) : loading ? (
         <div className={styles.loading}>Loading rates...</div>
       ) : !from ? (

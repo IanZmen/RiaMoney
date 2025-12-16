@@ -1,9 +1,12 @@
 import { Container } from "@/components/layout/Container";
 import { Card } from "@/components/ui/Card";
+import { ErrorState } from "@/components/common/ErrorState";
 import { ExchangeRatesOverview } from "@/components/dashboard/ExchangeRatesOverview";
 import { CurrencyConverter } from "@/components/dashboard/CurrencyConverter";
 import { getLatestRates } from "@/api/exchangeRates";
 import { getCurrencies } from "@/api/currencies";
+import { getUserErrorMessage } from "@/lib/errors/messages";
+import { toApiError } from "@/lib/errors/normalize";
 import { currenciesMapToArray } from "@/types";
 import styles from "./page.module.css";
 
@@ -29,7 +32,7 @@ async function fetchDashboardData() {
     return {
       rates: null,
       currencies: [],
-      ratesError: error instanceof Error ? error.message : "Unknown error",
+      ratesError: error instanceof Error ? toApiError(error) : toApiError(new Error("Unknown error")),
       currenciesError: null,
     };
   }
@@ -54,11 +57,10 @@ export default async function DashboardPage() {
               {currencies.length > 0 ? (
                 <CurrencyConverter initialCurrencies={currencies} />
               ) : currenciesError ? (
-                <div className={styles.errorContainer}>
-                  <p className={styles.errorMessage}>
-                    {currenciesError || "Could not load currencies"}
-                  </p>
-                </div>
+                <ErrorState
+                  message={getUserErrorMessage(currenciesError)}
+                  compact
+                />
               ) : (
                 <div className={styles.loading}>Loading currencies...</div>
               )}
@@ -68,11 +70,10 @@ export default async function DashboardPage() {
               {rates && currencies.length > 0 ? (
                 <ExchangeRatesOverview initialRates={rates} initialCurrencies={currencies} />
               ) : ratesError ? (
-                <div className={styles.errorContainer}>
-                  <p className={styles.errorMessage}>
-                    {ratesError || "Could not load exchange rates"}
-                  </p>
-                </div>
+                <ErrorState
+                  message={getUserErrorMessage(ratesError)}
+                  compact
+                />
               ) : (
                 <div className={styles.loading}>Loading exchange rates...</div>
               )}

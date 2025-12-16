@@ -1,0 +1,151 @@
+.results {
+  margin-top: 2rem;
+}
+
+.resultsHeader {
+  margin-bottom: 1rem;
+}
+
+.sortSelect {
+  max-width: 250px;
+}
+
+.legend {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: rgb(249 250 251);
+  border-radius: 0.5rem;
+  border: 1px solid rgb(209 213 219);
+  flex-wrap: wrap;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.legendSign {
+  font-weight: 700;
+  font-size: 1rem;
+  color: rgb(37 99 235);
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.legendText {
+  color: rgb(75 85 99);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border: 1px solid rgb(209 213 219);
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgb(255 255 255);
+}
+
+.table thead {
+  background-color: rgb(249 250 251);
+}
+
+.table th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: rgb(17 24 39);
+  border-bottom: 1px solid rgb(209 213 219);
+}
+
+.table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgb(243 244 246);
+  font-size: 0.875rem;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background-color: rgb(249 250 251);
+}
+
+.code {
+  font-weight: 600;
+  color: rgb(37 99 235);
+}
+
+.name {
+  color: rgb(75 85 99);
+}
+
+.direction {
+  font-size: 1.25rem;
+  text-align: center;
+  color: rgb(37 99 235);
+  font-weight: 700;
+  min-width: 2rem;
+}
+
+.value {
+  font-family: monospace;
+  font-size: 0.875rem;
+  color: rgb(75 85 99);
+  text-align: right;
+}
+
+.percentage {
+  font-weight: 600;
+  font-family: monospace;
+}
+
+.percentage.positive {
+  color: rgb(34 197 94);
+}
+
+.percentage.negative {
+  color: rgb(239 68 68);
+}
+
+.avgDaily {
+  font-family: monospace;
+  color: rgb(107 114 128);
+  font-size: 0.8125rem;
+}
+
+.showAllContainer {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.disclaimer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgb(209 213 219);
+  font-size: 0.75rem;
+  color: rgb(107 114 128);
+  font-style: italic;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .table {
+    font-size: 0.75rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 0.5rem 0.75rem;
+  }
+}
+

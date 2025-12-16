@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.container.compact {
+  padding: 1rem;
+}
+
+.icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: rgb(17 24 39);
+  margin-bottom: 0.5rem;
+}
+
+.message {
+  font-size: 0.875rem;
+  color: rgb(75 85 99);
+  margin-bottom: 1rem;
+  max-width: 400px;
+}
+
+.container.compact .icon {
+  font-size: 1.5rem;
+}
+
+.container.compact .title {
+  font-size: 1rem;
+}
+
+.container.compact .message {
+  font-size: 0.8125rem;
+  margin-bottom: 0.75rem;
+}
+

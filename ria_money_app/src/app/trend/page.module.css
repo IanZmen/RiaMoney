@@ -1,0 +1,38 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(249 250 251);
+}
+
+.main {
+  flex: 1;
+  padding: 2rem 0;
+}
+
+.header {
+  margin-bottom: 2rem;
+  min-height: fit-content;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: rgb(17 24 39);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.subtitle {
+  color: rgb(75 85 99);
+}
+
+.hint {
+  text-align: center;
+  padding: 2rem;
+  color: rgb(107 114 128);
+  font-style: italic;
+}

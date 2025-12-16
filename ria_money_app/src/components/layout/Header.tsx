@@ -18,6 +18,9 @@ export function Header() {
             <Link href="/dashboard" className={styles.navLink}>
               Dashboard
             </Link>
+            <Link href="/trend" className={styles.navLink}>
+              Trends
+            </Link>
           </nav>
         </div>
       </Container>
